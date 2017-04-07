@@ -25,8 +25,13 @@ defmodule GitHub do
     OAuth2.Client.authorize_url!(client(), params)
   end
 
-  def get_token!(params \\ [], headers \\ []) do
+  def get_token!(params \\ [], _headers \\ []) do
     OAuth2.Client.get_token!(client(), Keyword.merge(params, client_secret: client().client_secret))
+  end
+
+  def get_user!(client) do
+    {:ok, %{body: user}} = OAuth2.Client.get(client, "/user")
+    %{name: user["name"], avatar: user["avatar_url"]}
   end
 
   # Strategy Callbacks

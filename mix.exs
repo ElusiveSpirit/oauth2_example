@@ -9,8 +9,8 @@ defmodule OAuth2Example.Mixfile do
      compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
-     aliases: aliases]
+     deps: deps(),
+     aliases: aliases()]
   end
 
   # Configuration for the OTP application

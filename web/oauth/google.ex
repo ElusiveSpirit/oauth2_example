@@ -25,8 +25,13 @@ defmodule Google do
     OAuth2.Client.authorize_url!(client(), params)
   end
 
-  def get_token!(params \\ [], headers \\ []) do
+  def get_token!(params \\ [], _headers \\ []) do
     OAuth2.Client.get_token!(client(), params)
+  end
+
+  def get_user!(client) do
+    {:ok, %{body: user}} = OAuth2.Client.get(client, "https://www.googleapis.com/plus/v1/people/me/openIdConnect")
+    %{name: user["name"], avatar: user["picture"]}
   end
 
   # Strategy Callbacks

@@ -56,3 +56,8 @@ config :oauth2_example, Facebook,
   client_id: System.get_env("FACEBOOK_CLIENT_ID"),
   client_secret: System.get_env("FACEBOOK_CLIENT_SECRET"),
   redirect_uri: System.get_env("FACEBOOK_REDIRECT_URI")
+
+config :oauth2_example, VK,
+  client_id: System.get_env("VK_CLIENT_ID"),
+  client_secret: System.get_env("VK_CLIENT_SECRET"),
+  redirect_uri: System.get_env("VK_REDIRECT_URI")

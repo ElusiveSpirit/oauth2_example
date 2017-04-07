@@ -45,23 +45,19 @@ defmodule OAuth2Example.AuthController do
   defp authorize_url!("github"),   do: GitHub.authorize_url!
   defp authorize_url!("google"),   do: Google.authorize_url!(scope: "https://www.googleapis.com/auth/userinfo.email")
   defp authorize_url!("facebook"), do: Facebook.authorize_url!(scope: "user_photos")
+  defp authorize_url!("vk"),       do: VK.authorize_url!
   defp authorize_url!(_), do: raise "No matching provider available"
 
   defp get_token!("github", code),   do: GitHub.get_token!(code: code)
   defp get_token!("google", code),   do: Google.get_token!(code: code)
   defp get_token!("facebook", code), do: Facebook.get_token!(code: code)
+  defp get_token!("vk", code),       do: VK.get_token!(code: code)
   defp get_token!(_, _), do: raise "No matching provider available"
 
-  defp get_user!("github", client) do
-    %{body: user} = OAuth2.Client.get!(client, "/user")
-    %{name: user["name"], avatar: user["avatar_url"]}
-  end
-  defp get_user!("google", client) do
-    {:ok, %{body: user}} = OAuth2.Client.get!(client, "https://www.googleapis.com/plus/v1/people/me/openIdConnect")
-    %{name: user["name"], avatar: user["picture"]}
-  end
-  defp get_user!("facebook", client) do
-    {:ok, %{body: user}} = OAuth2.Client.get!(client, "/me", fields: "id,name")
-    %{name: user["name"], avatar: "https://graph.facebook.com/#{user["id"]}/picture"}
-  end
+  defp get_user!("github", client),   do: GitHub.get_user!(client)
+  defp get_user!("google", client),   do: Google.get_user!(client)
+  defp get_user!("facebook", client), do: Facebook.get_user!(client)
+  defp get_user!("vk", client),       do: VK.get_user!(client)
+  defp get_user!(_, _), do: raise "No matching provider available"
+
 end
